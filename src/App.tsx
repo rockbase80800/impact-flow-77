@@ -24,6 +24,7 @@ import ManageProjects from "./pages/dashboard/admin/ManageProjects";
 import AssignRoles from "./pages/dashboard/admin/AssignRoles";
 import Analytics from "./pages/dashboard/admin/Analytics";
 import WebsiteSettings from "./pages/dashboard/admin/WebsiteSettings";
+import ManageBanners from "./pages/dashboard/admin/ManageBanners";
 import CoordinatorUsers from "./pages/dashboard/coordinator/CoordinatorUsers";
 import CoordinatorMembers from "./pages/dashboard/coordinator/CoordinatorMembers";
 import NotFound from "./pages/NotFound";
@@ -65,6 +66,7 @@ const App = () => (
                 <Route path="admin/roles" element={<AssignRoles />} />
                 <Route path="admin/analytics" element={<Analytics />} />
                 <Route path="admin/settings" element={<WebsiteSettings />} />
+                <Route path="admin/banners" element={<ManageBanners />} />
                 <Route path="coordinator/users" element={<CoordinatorUsers />} />
                 <Route path="coordinator/members" element={<CoordinatorMembers />} />
               </Route>

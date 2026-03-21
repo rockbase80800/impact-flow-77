@@ -1,5 +1,6 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { PageWrapper } from "@/components/dashboard/PageWrapper";
+import { DashboardBanner } from "@/components/dashboard/DashboardBanner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, FolderOpen, Users, Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -34,6 +35,7 @@ export default function DashboardHome() {
 
   return (
     <PageWrapper><div className="space-y-8">
+      <DashboardBanner />
       <div>
         <h1 className="text-display text-2xl md:text-3xl text-foreground mb-1">
           Welcome back, {profile?.name || "User"}

@@ -7,6 +7,7 @@ import {
   MapPin,
   UserCheck,
   Settings,
+  Image,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -47,6 +48,13 @@ const menuItems: MenuItem[] = [
     description: "Manage branding, logo, and site content",
     icon: Settings,
     path: "/dashboard/admin/settings",
+    minRole: ["super_admin"],
+  },
+  {
+    label: "Manage Banners",
+    description: "Create and manage dashboard banners",
+    icon: Image,
+    path: "/dashboard/admin/banners",
     minRole: ["super_admin"],
   },
   {
