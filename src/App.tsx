@@ -24,6 +24,7 @@ import ManageProjects from "./pages/dashboard/admin/ManageProjects";
 import AssignRoles from "./pages/dashboard/admin/AssignRoles";
 import Analytics from "./pages/dashboard/admin/Analytics";
 import WebsiteSettings from "./pages/dashboard/admin/WebsiteSettings";
+import ManageBanners from "./pages/dashboard/admin/ManageBanners";
 import CoordinatorUsers from "./pages/dashboard/coordinator/CoordinatorUsers";
 import CoordinatorMembers from "./pages/dashboard/coordinator/CoordinatorMembers";
 import NotFound from "./pages/NotFound";
