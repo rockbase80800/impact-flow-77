@@ -6,6 +6,7 @@ import {
   BarChart3,
   MapPin,
   UserCheck,
+  Settings,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
