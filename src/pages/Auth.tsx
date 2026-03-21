@@ -56,7 +56,7 @@ const Auth = () => {
     try {
       if (isSignUp) {
         // Determine referral code: input field takes priority over URL param
-        const finalRefCode = referralCode.trim() || searchParams.get("ref") || "";
+        const finalRefCode = (referralCode.trim() || searchParams.get("ref") || "").toUpperCase().trim();
 
         // Validate referral code if provided
         if (finalRefCode) {
