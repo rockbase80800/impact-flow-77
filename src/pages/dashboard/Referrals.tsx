@@ -96,6 +96,6 @@ export default function Referrals() {
           )}
         </CardContent>
       </Card>
-    </div>
+    </div></PageWrapper>
   );
 }

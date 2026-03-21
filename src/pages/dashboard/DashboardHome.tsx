@@ -78,6 +78,6 @@ export default function DashboardHome() {
           </Card>
         </Link>
       </div>
-    </div>
+    </div></PageWrapper>
   );
 }

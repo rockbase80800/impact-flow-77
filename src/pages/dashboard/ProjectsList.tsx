@@ -58,6 +58,6 @@ export default function ProjectsList() {
           ))}
         </div>
       )}
-    </div>
+    </div></PageWrapper>
   );
 }
