@@ -83,10 +83,14 @@ export function DashboardSidebar() {
       <SidebarContent>
         {/* Brand */}
         <div className="flex items-center gap-2 px-4 py-4 border-b border-sidebar-border">
-          <Heart className="h-6 w-6 text-sidebar-primary shrink-0" />
+          {logoUrl ? (
+            <img src={logoUrl} alt={siteName} className="h-6 w-auto object-contain shrink-0" />
+          ) : (
+            <Heart className="h-6 w-6 text-sidebar-primary shrink-0" />
+          )}
           {!collapsed && (
             <span className="font-display text-lg font-semibold text-sidebar-foreground">
-              JanSeva
+              {siteName}
             </span>
           )}
         </div>
