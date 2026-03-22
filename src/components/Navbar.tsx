@@ -27,13 +27,16 @@ export function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
-          <a href="#projects" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <a href="/#projects" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Projects
           </a>
-          <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <a href="/#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             About
           </a>
-          <a href="#contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <Link to="/gallery" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            Gallery
+          </Link>
+          <a href="/#contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Contact
           </a>
           <Link to="/auth">
