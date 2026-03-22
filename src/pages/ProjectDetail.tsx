@@ -46,6 +46,8 @@ export default function ProjectDetail() {
   const [fields, setFields] = useState<FormField[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [formData, setFormData] = useState<Record<string, any>>({});
+  const [fileUploads, setFileUploads] = useState<Record<string, { name: string; url: string }>>({});
+  const [uploadingField, setUploadingField] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
