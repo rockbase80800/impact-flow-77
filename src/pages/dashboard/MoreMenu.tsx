@@ -76,6 +76,13 @@ const menuItems: MenuItem[] = [
     minRole: ["super_admin"],
   },
   {
+    label: "Videos",
+    description: "Manage YouTube videos",
+    icon: Video,
+    path: "/dashboard/admin/videos",
+    minRole: ["super_admin"],
+  },
+  {
     label: "Leads",
     description: "View all form submissions",
     icon: Contact,
