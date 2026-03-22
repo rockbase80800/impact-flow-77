@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, ArrowLeft, CheckCircle, ChevronDown, ArrowRight, Image as ImageIcon } from "lucide-react";
+import { Loader2, ArrowLeft, CheckCircle, ChevronDown, ArrowRight, Image as ImageIcon, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -19,7 +19,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 interface FormField {
   name: string;
   label: string;
-  type: "text" | "email" | "number" | "textarea" | "select" | "checkbox";
+  type: "text" | "email" | "number" | "textarea" | "select" | "checkbox" | "file";
   required?: boolean;
   options?: string[];
   placeholder?: string;
@@ -46,6 +46,8 @@ export default function ProjectDetail() {
   const [fields, setFields] = useState<FormField[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [formData, setFormData] = useState<Record<string, any>>({});
+  const [fileUploads, setFileUploads] = useState<Record<string, { name: string; url: string }>>({});
+  const [uploadingField, setUploadingField] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -99,6 +101,21 @@ export default function ProjectDetail() {
 
   const updateField = (name: string, value: any) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileUpload = async (fieldName: string, file: File) => {
+    if (!user) return;
+    if (file.size > 5 * 1024 * 1024) { toast.error("File must be under 5MB"); return; }
+    setUploadingField(fieldName);
+    const ext = file.name.split(".").pop();
+    const path = `${user.id}/${fieldName}_${Date.now()}.${ext}`;
+    const { error } = await supabase.storage.from("application-documents").upload(path, file);
+    if (error) { toast.error(error.message); setUploadingField(null); return; }
+    const { data: urlData } = supabase.storage.from("application-documents").getPublicUrl(path);
+    setFileUploads((prev) => ({ ...prev, [fieldName]: { name: file.name, url: urlData.publicUrl } }));
+    updateField(fieldName, urlData.publicUrl);
+    setUploadingField(null);
+    toast.success("File uploaded");
   };
 
   if (loading) {
@@ -280,9 +297,25 @@ export default function ProjectDetail() {
                             <SelectContent>{field.options?.map((opt) => (<SelectItem key={opt} value={opt}>{opt}</SelectItem>))}</SelectContent>
                           </Select>
                         ) : field.type === "checkbox" ? (
-                          <div className="flex items-center gap-2 mt-1">
+                          <div className="flex items-start gap-2 mt-1">
                             <Checkbox id={field.name} checked={formData[field.name] || false} onCheckedChange={(v) => updateField(field.name, v)} />
-                            <label htmlFor={field.name} className="text-sm">{field.placeholder}</label>
+                            <label htmlFor={field.name} className="text-sm leading-snug">{field.label}</label>
+                          </div>
+                        ) : field.type === "file" ? (
+                          <div className="mt-1">
+                            {fileUploads[field.name] ? (
+                              <div className="flex items-center gap-2 p-2 bg-success/10 border border-success/30 rounded-lg text-sm">
+                                <CheckCircle className="h-4 w-4 text-success shrink-0" />
+                                <span className="truncate">{fileUploads[field.name].name}</span>
+                                <Button type="button" variant="ghost" size="sm" className="ml-auto text-xs" onClick={() => { setFileUploads((p) => { const n = { ...p }; delete n[field.name]; return n; }); updateField(field.name, ""); }}>Change</Button>
+                              </div>
+                            ) : (
+                              <Button type="button" variant="outline" size="sm" className="relative w-full justify-start" disabled={uploadingField === field.name}>
+                                {uploadingField === field.name ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Upload className="h-4 w-4 mr-2" />}
+                                {uploadingField === field.name ? "Uploading..." : "Choose File"}
+                                <input type="file" accept="image/*,.pdf" className="absolute inset-0 opacity-0 cursor-pointer" onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFileUpload(field.name, f); }} />
+                              </Button>
+                            )}
                           </div>
                         ) : (
                           <Input id={field.name} type={field.type} placeholder={field.placeholder} required={field.required} value={formData[field.name] || ""} onChange={(e) => updateField(field.name, e.target.value)} />
