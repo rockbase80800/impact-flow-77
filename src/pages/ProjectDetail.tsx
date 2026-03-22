@@ -103,6 +103,21 @@ export default function ProjectDetail() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleFileUpload = async (fieldName: string, file: File) => {
+    if (!user) return;
+    if (file.size > 5 * 1024 * 1024) { toast.error("File must be under 5MB"); return; }
+    setUploadingField(fieldName);
+    const ext = file.name.split(".").pop();
+    const path = `${user.id}/${fieldName}_${Date.now()}.${ext}`;
+    const { error } = await supabase.storage.from("application-documents").upload(path, file);
+    if (error) { toast.error(error.message); setUploadingField(null); return; }
+    const { data: urlData } = supabase.storage.from("application-documents").getPublicUrl(path);
+    setFileUploads((prev) => ({ ...prev, [fieldName]: { name: file.name, url: urlData.publicUrl } }));
+    updateField(fieldName, urlData.publicUrl);
+    setUploadingField(null);
+    toast.success("File uploaded");
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
