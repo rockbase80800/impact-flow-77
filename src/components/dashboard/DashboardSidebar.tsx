@@ -12,6 +12,7 @@ import {
   Heart,
   Settings,
   Image,
+  Video,
 } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { NavLink } from "@/components/NavLink";
