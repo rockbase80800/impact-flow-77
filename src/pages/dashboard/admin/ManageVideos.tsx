@@ -194,7 +194,16 @@ export default function ManageVideos() {
                   <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{v.description}</p>
                 </div>
                 <div className="flex flex-col items-end gap-2 shrink-0">
-                  <Switch checked={v.is_active} onCheckedChange={() => toggleActive(v.id, v.is_active)} />
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => toggleFeatured(v.id, v.is_featured)}
+                      className={`p-1.5 rounded-md transition-colors ${v.is_featured ? 'text-yellow-500 bg-yellow-500/10' : 'text-muted-foreground hover:text-yellow-500'}`}
+                      title={v.is_featured ? "Unfeature" : "Set as featured"}
+                    >
+                      <Star className="h-4 w-4" fill={v.is_featured ? "currentColor" : "none"} />
+                    </button>
+                    <Switch checked={v.is_active} onCheckedChange={() => toggleActive(v.id, v.is_active)} />
+                  </div>
                   <div className="flex gap-1">
                     <a href={v.youtube_url} target="_blank" rel="noopener noreferrer">
                       <Button variant="ghost" size="icon" className="h-8 w-8"><ExternalLink className="h-4 w-4" /></Button>
