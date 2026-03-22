@@ -28,9 +28,11 @@ import ManageBanners from "./pages/dashboard/admin/ManageBanners";
 import ManageHomepage from "./pages/dashboard/admin/ManageHomepage";
 import ManageGallery from "./pages/dashboard/admin/ManageGallery";
 import ManageLeads from "./pages/dashboard/admin/ManageLeads";
+import ManageVideos from "./pages/dashboard/admin/ManageVideos";
 import CoordinatorUsers from "./pages/dashboard/coordinator/CoordinatorUsers";
 import CoordinatorMembers from "./pages/dashboard/coordinator/CoordinatorMembers";
 import Gallery from "./pages/Gallery";
+import Videos from "./pages/Videos";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
