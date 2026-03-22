@@ -140,6 +140,18 @@ export default function ManageVideos() {
                         placeholder="AI is generating description..."
                       />
                     </div>
+                    <div>
+                      <label className="text-sm font-medium">Category</label>
+                      <select
+                        value={selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                        className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                      >
+                        {VIDEO_CATEGORIES.map((c) => (
+                          <option key={c} value={c}>{c}</option>
+                        ))}
+                      </select>
+                    </div>
                     <Button className="w-full" onClick={handleSave} disabled={saving}>
                       {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                       Save Video
