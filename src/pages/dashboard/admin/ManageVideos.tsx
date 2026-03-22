@@ -9,6 +9,11 @@ import { toast } from "@/hooks/use-toast";
 import { Loader2, Plus, Trash2, ExternalLink } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
+const VIDEO_CATEGORIES = [
+  "General", "Education", "Health", "Environment", "Community",
+  "Agriculture", "Women Empowerment", "Youth", "Events", "Success Stories"
+];
+
 interface Video {
   id: string;
   youtube_url: string;
@@ -17,6 +22,7 @@ interface Video {
   description: string | null;
   thumbnail_url: string | null;
   is_active: boolean;
+  category: string | null;
   created_at: string;
 }
 
