@@ -177,7 +177,10 @@ export default function ManageVideos() {
                   className="w-32 h-20 object-cover rounded-lg shrink-0"
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm truncate">{v.title}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="font-semibold text-sm truncate">{v.title}</p>
+                    <span className="shrink-0 text-[10px] px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground">{v.category || "General"}</span>
+                  </div>
                   <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{v.description}</p>
                 </div>
                 <div className="flex flex-col items-end gap-2 shrink-0">
