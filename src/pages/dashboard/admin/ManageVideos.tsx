@@ -9,6 +9,11 @@ import { toast } from "@/hooks/use-toast";
 import { Loader2, Plus, Trash2, ExternalLink } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
+const VIDEO_CATEGORIES = [
+  "General", "Education", "Health", "Environment", "Community",
+  "Agriculture", "Women Empowerment", "Youth", "Events", "Success Stories"
+];
+
 interface Video {
   id: string;
   youtube_url: string;
@@ -17,6 +22,7 @@ interface Video {
   description: string | null;
   thumbnail_url: string | null;
   is_active: boolean;
+  category: string | null;
   created_at: string;
 }
 
@@ -29,6 +35,7 @@ export default function ManageVideos() {
   const [saving, setSaving] = useState(false);
   const [meta, setMeta] = useState<{ youtube_id: string; title: string; thumbnail_url: string; description: string } | null>(null);
   const [editDesc, setEditDesc] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("General");
 
   const fetchVideos = async () => {
     const { data } = await supabase.from("videos").select("*").order("created_at", { ascending: false });
@@ -65,6 +72,7 @@ export default function ManageVideos() {
       title: meta.title,
       description: editDesc || meta.description,
       thumbnail_url: meta.thumbnail_url,
+      category: selectedCategory,
     } as any);
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
@@ -74,6 +82,7 @@ export default function ManageVideos() {
       setYoutubeUrl("");
       setMeta(null);
       setEditDesc("");
+      setSelectedCategory("General");
       fetchVideos();
     }
     setSaving(false);
@@ -131,6 +140,18 @@ export default function ManageVideos() {
                         placeholder="AI is generating description..."
                       />
                     </div>
+                    <div>
+                      <label className="text-sm font-medium">Category</label>
+                      <select
+                        value={selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                        className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                      >
+                        {VIDEO_CATEGORIES.map((c) => (
+                          <option key={c} value={c}>{c}</option>
+                        ))}
+                      </select>
+                    </div>
                     <Button className="w-full" onClick={handleSave} disabled={saving}>
                       {saving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                       Save Video
@@ -156,7 +177,10 @@ export default function ManageVideos() {
                   className="w-32 h-20 object-cover rounded-lg shrink-0"
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm truncate">{v.title}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="font-semibold text-sm truncate">{v.title}</p>
+                    <span className="shrink-0 text-[10px] px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground">{v.category || "General"}</span>
+                  </div>
                   <p className="text-xs text-muted-foreground line-clamp-2 mt-1">{v.description}</p>
                 </div>
                 <div className="flex flex-col items-end gap-2 shrink-0">
