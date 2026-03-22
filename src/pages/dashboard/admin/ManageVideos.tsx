@@ -35,6 +35,7 @@ export default function ManageVideos() {
   const [saving, setSaving] = useState(false);
   const [meta, setMeta] = useState<{ youtube_id: string; title: string; thumbnail_url: string; description: string } | null>(null);
   const [editDesc, setEditDesc] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("General");
 
   const fetchVideos = async () => {
     const { data } = await supabase.from("videos").select("*").order("created_at", { ascending: false });
